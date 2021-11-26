@@ -29,7 +29,7 @@ else:
     print('Carregando...')
     time.sleep(5)
 
-hora1 = int(str(datetime.now())[14:16])
+hora1 = int(str(datetime.now())[17:19])
 
 # construct the argument parser and parse the arguments
 ap = argparse.ArgumentParser()
@@ -52,10 +52,10 @@ h1 = 0
 # loop over the frames of the video
 while True:
     time.sleep(0.05)
-    horaatual = int(str(datetime.now())[14:16])
-    if horaatual - hora1 > 0:  # <------------------------------------------ 0 m: A cada minuto a imagem de referência reinicia
+    horaatual = int(str(datetime.now())[17:19])
+    if horaatual - hora1 > 10:  # <------------------------------------------ 10 m: A cada 10 segundos a imagem de referência reinicia
         firstFrame = None
-        hora1 = int(str(datetime.now())[14:16])
+        hora1 = int(str(datetime.now())[17:19])
     # grab the current frame and initialize the occupied/unoccupied
     # text
     frame = vs.read()[300:480, 195:640]  # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO
@@ -97,13 +97,15 @@ while True:
         now1 = datetime.now()
         noww = int(str(now1)[17:19])
         #print(noww)
+        ragatanga = str(datetime.now())[14:16]
 
-        if int(math.sqrt(((noww) - int(h1)) ** 2)) >= 20:  # <------------------------- 20s = cooldown para novo disparo
+        if str(now1)[14:16] != ragatanga or int(math.sqrt(((noww) - int(h1)) ** 2)) >= 20:  # <------------------------- 20s = cooldown para novo disparo
             win()
             now = datetime.now()
             # print(int(h1))
             # print(int(noww))
             h1 = str(now)[17:19]
+            ragatanga = str(now)[14:16]
             print('Movimento detectado!\n' + str(now))
 
     # draw the text and timestamp on the frame

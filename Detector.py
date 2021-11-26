@@ -7,7 +7,7 @@ import cv2
 import pyautogui
 from datetime import datetime
 import math
-import webbrowser
+#import webbrowser
 
 kkkk = False
 

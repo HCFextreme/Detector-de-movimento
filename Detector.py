@@ -62,12 +62,12 @@ web()
 
 # initialize the first frame in the video stream
 firstFrame = None
-
-a = 'a'
+a1 = 1.6 # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO (+a +altura, +b + largura)
+b1 = 3.28
 
 h1 = 0
 
-print('Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera!')
+print('Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera! (Pode gerar muitos erros que podem ser ignorados!)')
 
 # loop over the frames of the video
 while True:
@@ -79,7 +79,7 @@ while True:
     # grab the current frame and initialize the occupied/unoccupied
     # text
     try:
-        frame = vs.read()[int(width/1.6):width, int(height/3.28):height]  # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO (1.6 e 3.28)
+        frame = vs.read()[int(width/a1):width, int(height/b1):height]
     except:
         web()
         continue
@@ -145,6 +145,7 @@ while True:
     try:  # used try so that if user pressed other than the given key error will not be shown
         if keyboard.is_pressed('q') and keyboard.is_pressed('z'):  # if key 'q' and 'z' is pressed
             print('Mudando câmera')
+            time.sleep(0.5)
             web()
             firstFrame = None
         elif keyboard.is_pressed('k'):

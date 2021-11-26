@@ -7,6 +7,7 @@ import cv2
 import pyautogui
 from datetime import datetime
 import math
+import keyboard
 #import webbrowser
 
 video = cv2.VideoCapture(0, cv2.CAP_DSHOW)
@@ -27,7 +28,7 @@ def win():
         pyautogui.press('win')
 
 
-aaa = str(input('Deseja ajustar a câmera antes de iniciar o programa? Digite "s" ou "n".\n')).strip().lower()
+aaa = str(input('Deseja ajustar a câmera antes de iniciar o programa? Digite "s" ou "n" (Aperte ''k'' para encerrar o teste).\n')).strip().lower()
 
 if aaa[0:1] == 's':
     kkkk = True
@@ -43,18 +44,30 @@ ap.add_argument("-v", "--video", help="path to the video file")
 ap.add_argument("-a", "--min-area", type=int, default=500, help="minimum area size")
 args = vars(ap.parse_args())
 # if the video argument is None, then we are reading from webcam
-if args.get("video", None) is None:
-    vs = VideoStream(src=0).start() # <------------------------------------- Src 0,1,2,3,4.... = webcam usada
-    time.sleep(2.0)
-# otherwise, we are reading from a video file
-else:
-    vs = cv2.VideoCapture(args["video"])
+x = -1
+def web():
+    global vs
+    global x
+    x = x+1
+    if x == 10:
+        x = 0
+    if args.get("video", None) is None:
+        vs = VideoStream(src=x).start() # <------------------------------------- Src 0,1,2,3,4.... = webcam usada
+        time.sleep(2.0)
+    # otherwise, we are reading from a video file
+    else:
+        vs = cv2.VideoCapture(args["video"])
+
+web()
+
 # initialize the first frame in the video stream
 firstFrame = None
 
 a = 'a'
 
 h1 = 0
+
+print('Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera!')
 
 # loop over the frames of the video
 while True:
@@ -65,7 +78,11 @@ while True:
         hora1 = int(str(datetime.now())[17:19])
     # grab the current frame and initialize the occupied/unoccupied
     # text
-    frame = vs.read()[int(width/1.6):width, int(height/3.28):height]  # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO (1.6 e 3.28)
+    try:
+        frame = vs.read()[int(width/1.6):width, int(height/3.28):height]  # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO (1.6 e 3.28)
+    except:
+        web()
+        continue
     frame = frame if args.get("video", None) is None else frame[1]
     text = "Unoccupied"
     # if the frame could not be grabbed, then we have reached the end
@@ -125,8 +142,18 @@ while True:
     # cv2.imshow("Frame Delta", frameDelta)
     key = cv2.waitKey(1) & 0xFF
     # if the `q` key is pressed, break from the lop
-    if key == ord("q"):
-        break
+    try:  # used try so that if user pressed other than the given key error will not be shown
+        if keyboard.is_pressed('q') and keyboard.is_pressed('z'):  # if key 'q' and 'z' is pressed
+            print('Mudando câmera')
+            web()
+            firstFrame = None
+        elif keyboard.is_pressed('k'):
+            kkkk = False
+            time.sleep(0.5)
+            print("Teste encerrado!")
+
+    except:
+        continue  # if user pressed a key other than the given key the loop will break
 # cleanup the camera and close any open windows
 vs.stop() if args.get("video", None) is None else vs.release()
 cv2.destroyAllWindows()

@@ -46,7 +46,7 @@ else:
 # initialize the first frame in the video stream
 firstFrame = None
 a = 'a'
-
+ragatanga = str(datetime.now())[14:16]
 h1 = 0
 
 # loop over the frames of the video
@@ -97,7 +97,7 @@ while True:
         now1 = datetime.now()
         noww = int(str(now1)[17:19])
         #print(noww)
-        ragatanga = str(datetime.now())[14:16]
+
 
         if str(now1)[14:16] != ragatanga or int(math.sqrt(((noww) - int(h1)) ** 2)) >= 20:  # <------------------------- 20s = cooldown para novo disparo
             win()
@@ -105,7 +105,7 @@ while True:
             # print(int(h1))
             # print(int(noww))
             h1 = str(now)[17:19]
-            ragatanga = str(now)[14:16]
+            ragatanga = str(datetime.now())[14:16]
             print('Movimento detectado!\n' + str(now))
 
     # draw the text and timestamp on the frame

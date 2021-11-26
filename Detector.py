@@ -9,6 +9,11 @@ from datetime import datetime
 import math
 #import webbrowser
 
+video = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+check, frame = video.read()
+width,height, cu = (frame.shape)
+video.release()
+
 kkkk = False
 
 def win():
@@ -46,6 +51,7 @@ else:
     vs = cv2.VideoCapture(args["video"])
 # initialize the first frame in the video stream
 firstFrame = None
+
 a = 'a'
 
 h1 = 0
@@ -59,7 +65,7 @@ while True:
         hora1 = int(str(datetime.now())[17:19])
     # grab the current frame and initialize the occupied/unoccupied
     # text
-    frame = vs.read()[300:480, 195:640]  # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO
+    frame = vs.read()[int(width/1.6):width, int(height/3.28):height]  # <--------------------------------------- AJUSTE AQUI O CORTE DO VIDEO (1.6 e 3.28)
     frame = frame if args.get("video", None) is None else frame[1]
     text = "Unoccupied"
     # if the frame could not be grabbed, then we have reached the end

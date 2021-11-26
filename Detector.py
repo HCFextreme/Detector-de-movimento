@@ -102,8 +102,8 @@ while True:
         if int(math.sqrt(((noww) - h1) ** 2)) >= 20:  # <------------------------- 20s = cooldown para novo disparo
             win()
             now = datetime.now()
-            print(horaatual)
-            print(int(hora1))
+            #print(horaatual)
+            #print(int(hora1))
             h1 = int((str(now)[14:16]) + (str(now)[17:19]))
             print('Movimento detectado!\n' + str(now))
 

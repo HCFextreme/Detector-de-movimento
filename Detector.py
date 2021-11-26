@@ -46,14 +46,14 @@ else:
 # initialize the first frame in the video stream
 firstFrame = None
 a = 'a'
-ragatanga = str(datetime.now())[14:16]
+
 h1 = 0
 
 # loop over the frames of the video
 while True:
     time.sleep(0.05)
     horaatual = int(str(datetime.now())[17:19])
-    if horaatual - hora1 > 10:  # <------------------------------------------ 10 m: A cada 10 segundos a imagem de referência reinicia
+    if math.sqrt((hora1 - horaatual)**2) > 10:  # <------------------------------------------ 10 m: A cada 10 segundos a imagem de referência reinicia
         firstFrame = None
         hora1 = int(str(datetime.now())[17:19])
     # grab the current frame and initialize the occupied/unoccupied
@@ -95,18 +95,17 @@ while True:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
         text = "Occupied"
         now1 = datetime.now()
-        noww = int(str(now1)[17:19])
+        noww = int((str(now1)[14:16]) + (str(now1)[17:19]))
         #print(noww)
 
-
-        if str(now1)[14:16] != ragatanga or int(math.sqrt(((noww) - int(h1)) ** 2)) >= 20:  # <------------------------- 20s = cooldown para novo disparo
+        if int(math.sqrt(((noww) - h1) ** 2)) >= 20:  # <------------------------- 20s = cooldown para novo disparo
             win()
             now = datetime.now()
-            # print(int(h1))
-            # print(int(noww))
-            h1 = str(now)[17:19]
-            ragatanga = str(datetime.now())[14:16]
+            print(horaatual)
+            print(int(hora1))
+            h1 = int((str(now)[14:16]) + (str(now)[17:19]))
             print('Movimento detectado!\n' + str(now))
+
 
     # draw the text and timestamp on the frame
     cv2.putText(frame, "Room Status: {}".format(text), (10, 20),

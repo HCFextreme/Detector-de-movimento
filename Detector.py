@@ -19,6 +19,7 @@ def win():
         pyautogui.press('d')
         pyautogui.keyUp('win')
         pyautogui.press('volumemute')
+        pyautogui.press('win')
 
 
 aaa = str(input('Deseja ajustar a câmera antes de iniciar o programa? Digite "s" ou "n".\n')).strip().lower()

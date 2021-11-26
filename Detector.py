@@ -9,11 +9,17 @@ from datetime import datetime
 import math
 import keyboard
 #import webbrowser
-
-video = cv2.VideoCapture(0, cv2.CAP_DSHOW)
-check, frame = video.read()
-width,height, cu = (frame.shape)
-video.release()
+a = 1
+kk = 0
+while a == 1:
+    try:
+        video = cv2.VideoCapture(kk, cv2.CAP_DSHOW)
+        check, frame = video.read()
+        width,height, cu = (frame.shape)
+        video.release()
+        a = 0
+    except:
+        kk = kk + 1
 
 kkkk = False
 

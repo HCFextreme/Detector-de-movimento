@@ -9,6 +9,18 @@ from datetime import datetime
 import math
 import keyboard
 #import webbrowser
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
 a = 1
 kk = 0
 while a == 1:
@@ -34,12 +46,12 @@ def win():
         pyautogui.press('win')
 
 
-aaa = str(input('Deseja ajustar a câmera antes de iniciar o programa? Digite "s" ou "n" (Aperte ''k'' para encerrar o teste).\n')).strip().lower()
+aaa = str(input(bcolors.WARNING + 'Deseja ajustar a câmera antes de iniciar o programa? Digite "s" ou "n" (Aperte ''k'' + ''q'' para encerrar ou reiniciar o teste).\n' + bcolors.ENDC)).strip().lower()
 
 if aaa[0:1] == 's':
     kkkk = True
 else:
-    print('Carregando...')
+    print(bcolors.WARNING + 'Carregando...' + bcolors.ENDC)
     time.sleep(5)
 
 hora1 = int(str(datetime.now())[17:19])
@@ -73,7 +85,7 @@ b1 = 3.28
 
 h1 = 0
 
-print('Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera! (Pode gerar muitos erros que podem ser ignorados!)')
+print(bcolors.WARNING + 'Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera! (Pode gerar muitos erros que podem ser ignorados!)')
 
 # loop over the frames of the video
 while True:
@@ -134,7 +146,7 @@ while True:
             #print(horaatual)
             #print(int(hora1))
             h1 = int((str(now)[14:16]) + (str(now)[17:19]))
-            print('Movimento detectado!\n' + str(now))
+            print(bcolors.BOLD + 'Movimento detectado!\n' + str(now) + bcolors.ENDC)
 
 
     # draw the text and timestamp on the frame
@@ -150,14 +162,19 @@ while True:
     # if the `q` key is pressed, break from the lop
     try:  # used try so that if user pressed other than the given key error will not be shown
         if keyboard.is_pressed('q') and keyboard.is_pressed('z'):  # if key 'q' and 'z' is pressed
-            print('Mudando câmera')
+            print(bcolors.WARNING + 'Mudando câmera' + bcolors.ENDC)
             time.sleep(0.5)
             web()
             firstFrame = None
-        elif keyboard.is_pressed('k'):
-            kkkk = False
-            time.sleep(0.5)
-            print("Teste encerrado!")
+        elif keyboard.is_pressed('q') and keyboard.is_pressed('k'):
+            if kkkk == True:
+                kkkk = False
+                time.sleep(0.5)
+                print(bcolors.WARNING + "Teste encerrado!" + bcolors.ENDC)
+            else:
+                kkkk = True
+                time.sleep(0.5)
+                print(bcolors.WARNING + "Teste iniciado!" + bcolors.ENDC)
 
     except:
         continue  # if user pressed a key other than the given key the loop will break

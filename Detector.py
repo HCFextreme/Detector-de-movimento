@@ -80,7 +80,7 @@ b1 = 3.28
 
 h1 = 0
 
-print('Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera! (Pode gerar muitos erros que podem ser ignorados!)', 'yellow')
+print('Pronto! Aperte as teclas ''q'' + ''z'' para mudar de câmera! (Pode gerar muitos erros que podem ser ignorados!)')
 
 # loop over the frames of the video
 while True:

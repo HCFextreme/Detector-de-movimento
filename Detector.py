@@ -141,7 +141,7 @@ while True:
             #print(horaatual)
             #print(int(hora1))
             h1 = int((str(now)[14:16]) + (str(now)[17:19]))
-            print(('Movimento detectado!\n' + str(now)), 'red')
+            print(('Movimento detectado!\n' + str(now)))
 
 
     # draw the text and timestamp on the frame
